@@ -13,7 +13,9 @@ module Troop
             end
         end
 
-        def deploy(environment, needs_to_archive = false)
+        def deploy(environment, needs_to_archive = false, needs_to_distribute = false)
+            @needs_to_distribute = needs_to_distribute
+
             configure do
                 beta_build = build_task environment
                 beta_config = archive_build beta_build if needs_to_archive
@@ -39,8 +41,9 @@ module Troop
                 beta_config.configuration       = @config[environment]["configuration"]
 
                 beta_config.deploy_using(:testflight) do |testflight|
-                    testflight.api_token  = @config["api_token"]
-                    testflight.team_token = @config["team_token"]
+                    testflight.api_token          = @config["api_token"]
+                    testflight.team_token         = @config["team_token"]
+                    testflight.distribution_lists = @config[environment]["distribution_list"] if @needs_to_distribute && @config[environment]["distribution_list"]
                 end
             end
             beta_build  = task.instance_eval { @configuration }

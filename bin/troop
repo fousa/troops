@@ -16,8 +16,9 @@ module Wasko
 
     desc "deploy ENVIRONMENT", "deploy the iOS application to testflight"
     method_options :archive => :boolean, :alias => :string
+    method_options :distribute => :boolean, :alias => :string
     def deploy(environment="staging")
-        Troop.deploy(environment, options.archive?)
+        Troop.deploy(environment, options.archive?, options.distribute?)
     end
   end
 end

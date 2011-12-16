@@ -29,10 +29,12 @@ Next to the token there are some other setting that you can define such as the e
     staging:
         target: "My App"
         environment: "Ad Hoc"
+        disitribution_list: ["developers"]
     
     production:
         target: "My App"
         environment: "Release"
+        disitribution_list: ["developers", "testers"]
 
 Add this file to your project folder.
 
@@ -61,6 +63,10 @@ This always uses the staging 'environment' to build the correct target. You can 
 This command doesn't archive the build, if you want to archive while deploying, add the `--archive` argument.
 
     troop deploy production --archive
+
+To distribute the build to a disitribution group add the `--distribute` argument. This will send an email to the persons belonging to the distribution list defined in the project `.troop` file.
+
+    troop deploy production --distribute
     
 ## License
 

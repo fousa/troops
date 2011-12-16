@@ -1,6 +1,6 @@
 source "http://rubygems.org"
 
-gem "betabuilder", "~> 0.4.7.1"
+gem "betabuilder", ">= 0.4.7.1"
 gem "thor"
 gem "rake"
 
