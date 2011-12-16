@@ -6,19 +6,23 @@ require "betabuilder"
 module Troops
     class << self
         def archive(environment)
+            @environment = environment
+
            configure do 
-                beta_build = build_task environment
+                beta_build = build_task 
 
                 archive_build beta_build
             end
         end
 
         def deploy(environment, needs_to_archive = false, needs_to_distribute = false)
+            @environment         = environment
+            @needs_to_archive    = needs_to_archive
             @needs_to_distribute = needs_to_distribute
 
             configure do
-                beta_build = build_task environment
-                beta_config = archive_build beta_build if needs_to_archive
+                beta_build = build_task 
+                beta_config = archive_build beta_build if @needs_to_archive
 
                 deploy_build_to_testflight beta_build
             end
@@ -27,23 +31,23 @@ module Troops
         private
 
         def configure(&block)
-            @config = Troops::Configuration.config
+            @config = Troops::Configuration.config @environment
             unless @config.nil?
                 yield
             end
         end
 
-        def build_task(environment)
+        def build_task
             task = BetaBuilder::Tasks.new do |beta_config|
                 beta_config.xcode4_archive_mode = true
 
-                beta_config.target              = @config[environment]["target"]
-                beta_config.configuration       = @config[environment]["configuration"]
+                beta_config.target              = @config[@environment]["target"]
+                beta_config.configuration       = @config[@environment]["configuration"]
 
                 beta_config.deploy_using(:testflight) do |testflight|
                     testflight.api_token          = @config["api_token"]
                     testflight.team_token         = @config["team_token"]
-                    testflight.distribution_lists = @config[environment]["distribution_list"] if @needs_to_distribute && @config[environment]["distribution_list"]
+                    testflight.distribution_lists = @config[@environment]["distribution_list"] if @needs_to_distribute && @config[@environment]["distribution_list"]
                 end
             end
             beta_build  = task.instance_eval { @configuration }

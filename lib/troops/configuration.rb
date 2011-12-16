@@ -14,7 +14,7 @@ module Troops
   #
   class Configuration
     class << self
-        def config
+        def config(environment)
             config_hash = yamlize
             if config_hash["team_token"].nil?
                 puts ""
@@ -47,6 +47,24 @@ module Troops
                 puts "===     target: 'The Ad Hoc iOS App Name'                                                 ==="
                 puts "===                                                                                       ==="
                 puts "=== You can find your Team Token on Your Account page on http://testflightapp.com         ==="
+                puts "============================================================================================="
+                puts "============================================================================================="
+                puts ""
+            elsif config_hash[environment].nil?
+                puts ""
+                puts "============================================================================================="
+                puts "================================== TROOPS ==================================================="
+                puts "============================================================================================="
+                puts "=== You have to set your environment variable in your .troops file.                       ==="
+                puts "=== Here is an example on how the .troops file should look:                               ==="
+                puts "===                                                                                       ==="
+                puts "=== api_token: 'thisisyourawesomeapitoken'                                                ==="
+                puts "=== production:                                                                           ==="
+                puts "===     configuration: 'Release'                                                          ==="
+                puts "===     target: 'The Release iOS App Name'                                                ==="
+                puts "=== staging:                                                                              ==="
+                puts "===     configuration: 'Ad Hoc'                                                           ==="
+                puts "===     target: 'The Ad Hoc iOS App Name'                                                 ==="
                 puts "============================================================================================="
                 puts "============================================================================================="
                 puts ""
