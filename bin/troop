@@ -1,0 +1,24 @@
+#!/usr/bin/ruby
+
+$LOAD_PATH.unshift File.join(File.dirname(__FILE__), '..', 'lib')
+require "rubygems"
+require "troop"
+require "thor"
+
+module Wasko
+  class CLI < Thor
+    include Thor::Actions
+
+    desc "archive ENVIRONMENT", "archive the iOS application"
+    def archive(environment="staging")
+        Troop.archive(environment)
+    end
+
+    desc "deploy ENVIRONMENT", "deploy the iOS application to testflight"
+    method_options :archive => :boolean, :alias => :string
+    def deploy(environment="staging")
+        Troop.deploy(environment, options.archive?)
+    end
+  end
+end
+Wasko::CLI.start
