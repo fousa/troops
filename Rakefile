@@ -29,5 +29,6 @@ Jeweler::Tasks.new do |gem|
     "lib/troop.rb",
     "lib/troop/configuration.rb",
   ]
+  gem.version = "0.1.0"
 end
 Jeweler::RubygemsDotOrgTasks.new
