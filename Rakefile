@@ -31,7 +31,7 @@ Jeweler::Tasks.new do |gem|
     "lib/troop.rb",
     "lib/troop/configuration.rb",
   ]
-  gem.version = "0.1.0"
+  gem.version = "0.1.1"
   gem.extra_rdoc_files = [
       "README.md", 
       "LICENSE"
