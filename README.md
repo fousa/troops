@@ -6,7 +6,7 @@ iOS deployment to [TestFlight](http://testflightapp.com) with the [betabuilder](
 
 Simply install the gem:
 
-    gem install troops
+    gem install troop
 
 ### Configuration files
 
