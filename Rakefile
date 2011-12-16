@@ -13,11 +13,10 @@ require 'rake'
 
 require 'jeweler'
 Jeweler::Tasks.new do |gem|
-  # gem is a Gem::Specification... see http://docs.rubygems.org/read/chapter/20 for more options
   gem.name = "troop"
   gem.homepage = "http://github.com/fousa/troop"
   gem.license = "MIT"
-  gem.summary = %Q{Deploy iOS apps with betabuilder}
+  gem.summary = %Q{Deploy your iOS apps to TestFlight with betabuilder}
   gem.description = %Q{Deploy iOS apps with betabuilder}
   gem.email = "jelle@fousa.be"
   gem.authors = ["Jelle Vandebeeck"]
@@ -26,9 +25,17 @@ Jeweler::Tasks.new do |gem|
   gem.add_runtime_dependency 'betabuilder'
   gem.require_paths = ["lib"]
   gem.files = [
+    "Rakefile",
+    "Gemfile",
+    "bin/troop",
     "lib/troop.rb",
     "lib/troop/configuration.rb",
   ]
   gem.version = "0.1.0"
+  gem.extra_rdoc_files = [
+      "README.md", 
+      "LICENSE"
+  ]
+  gem.rdoc_options = ["--main", "README.md"]
 end
 Jeweler::RubygemsDotOrgTasks.new
