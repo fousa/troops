@@ -2,7 +2,7 @@
 
 $LOAD_PATH.unshift File.join(File.dirname(__FILE__), '..', 'lib')
 require "rubygems"
-require "troop"
+require "troops"
 require "thor"
 
 module Wasko
@@ -11,14 +11,14 @@ module Wasko
 
     desc "archive ENVIRONMENT", "archive the iOS application"
     def archive(environment="staging")
-        Troop.archive(environment)
+        Troops.archive(environment)
     end
 
     desc "deploy ENVIRONMENT", "deploy the iOS application to testflight"
     method_options :archive => :boolean, :alias => :string
     method_options :distribute => :boolean, :alias => :string
     def deploy(environment="staging")
-        Troop.deploy(environment, options.archive?, options.distribute?)
+        Troops.deploy(environment, options.archive?, options.distribute?)
     end
   end
 end

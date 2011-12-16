@@ -1,9 +1,9 @@
-require "troop/configuration"
+require "troops/configuration"
 
 require "rubygems"
 require "betabuilder"
 
-module Troop
+module Troops
     class << self
         def archive(environment)
            configure do 
@@ -27,7 +27,7 @@ module Troop
         private
 
         def configure(&block)
-            @config = Troop::Configuration.config
+            @config = Troops::Configuration.config
             unless @config.nil?
                 yield
             end

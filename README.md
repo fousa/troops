@@ -1,4 +1,4 @@
-# TROOP
+# TROOPS
 
 iOS deployment to [TestFlight](http://testflightapp.com) with the [betabuilder](http://rubygems.org/gems/betabuilder) gem.
 
@@ -6,21 +6,21 @@ iOS deployment to [TestFlight](http://testflightapp.com) with the [betabuilder](
 
 Simply install the gem:
 
-    gem install troop
+    gem install troops
 
 ### Configuration files
 
-There are 2 kind of configuration files, there needs to be a global file & file defined for each project. The files are always named `.troop` and resides in your home folder (for the global file) or in your project folder (for the project dependent file).
+There are 2 kind of configuration files, there needs to be a global file & file defined for each project. The files are always named `.troops` and resides in your home folder (for the global file) or in your project folder (for the project dependent file).
 
 ### Global file
 
-This `.troop`-file only needs to contain your API Token from TestFlight. You can find this token on the 'Your Account' page. Here is how the file needs to be formatted:
+This `.troops`-file only needs to contain your API Token from TestFlight. You can find this token on the 'Your Account' page. Here is how the file needs to be formatted:
 
     api_token: "thisismymegaawesometoken"
 
 ### Project file
 
-The project's '.troop' file contains the Team Token from your TestFlight Team. and some environmental properties that you can change. The Team Token can be found on the Team Info page.
+The project's '.troops' file contains the Team Token from your TestFlight Team. and some environmental properties that you can change. The Team Token can be found on the Team Info page.
 
 Next to the token there are some other setting that you can define such as the environment you wish to deploy to (ex. Ad Hoc, Release...), or you can specify the target.
 
@@ -44,29 +44,29 @@ Add this file to your project folder.
 
 Archive your application by running the following command:
     
-    troop archive
+    troops archive
 
 This always uses the staging 'environment' to build the correct target. You can specify an environment by adding it as an argument:
 
-    troop archive production
+    troops archive production
 
 ### Deploy to TestFlight
 
 Deploy your application by running the following command:
     
-    troop deploy
+    troops deploy
 
 This always uses the staging 'environment' to build the correct target. You can specify an environment by adding it as an argument:
 
-    troop deploy production
+    troops deploy production
 
 This command doesn't archive the build, if you want to archive while deploying, add the `--archive` argument.
 
-    troop deploy production --archive
+    troops deploy production --archive
 
-To distribute the build to a disitribution group add the `--distribute` argument. This will send an email to the persons belonging to the distribution list defined in the project `.troop` file.
+To distribute the build to a disitribution group add the `--distribute` argument. This will send an email to the persons belonging to the distribution list defined in the project `.troops` file.
 
-    troop deploy production --distribute
+    troops deploy production --distribute
     
 ## License
 
