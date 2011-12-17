@@ -13,7 +13,10 @@ module Troops
             @environment = args[:environment]
             @log         = args[:log]
 
-           configure do 
+            $stdout.reopen("output.txt", "w") unless @log
+            warn "--- Start archiving"
+
+            configure do 
                 beta_build = build_task 
 
                 archive_build beta_build
@@ -28,7 +31,13 @@ module Troops
             @needs_to_distribute = args[:needs_to_distribute]
             @log                 = args[:log]
 
+            $stdout.reopen("output.txt", "w") unless @log
+            warn "--- Start deploying"
+
             configure do
+                get_release_notes
+                @release_notes = "No release notes specified in troops" if @release_notes.nil? || @release_notes.strip == ""
+
                 beta_build  = build_task 
                 beta_config = archive_build beta_build if @needs_to_archive
 
@@ -40,7 +49,23 @@ module Troops
 
         private
 
+        def get_release_notes
+            warn "--- Enter the TestFlight release notes (hit enter 2 times to finish)"
+
+            @release_notes = gets_until_match(/\n{2}$/).strip
+        end
+
+        def gets_until_match(pattern, string = "")
+            if (string += STDIN.gets) =~ pattern
+                string
+            else
+                gets_until_match(pattern, string)
+            end
+        end
+
         def configure(&block)
+            warn "--- Checking configuration"
+
             @config = Troops::Configuration.config @environment
             unless @config.nil?
                 yield
@@ -58,6 +83,9 @@ module Troops
                     testflight.api_token          = @config["api_token"]
                     testflight.team_token         = @config["team_token"]
                     testflight.distribution_lists = @config[@environment]["distribution_list"] if @needs_to_distribute && @config[@environment]["distribution_list"]
+                    testflight.generate_release_notes do
+                        @release_notes
+                    end
                 end
             end
             beta_build  = task.instance_eval { @configuration }
@@ -68,7 +96,9 @@ module Troops
         end
 
         def build(task, beta_build)
-            task.xcodebuild beta_build.build_arguments, "build"
+            warn "--- Building the application"
+
+            task.xcodebuild(beta_build.build_arguments, "build")
         end
 
         def archive_build(beta_build)
@@ -76,12 +106,14 @@ module Troops
             beta_config = beta_archive.instance_eval { @configuration }
             output_path = beta_archive.save_to(beta_config.archive_path)
 
-            puts "Archive saved to #{output_path}."
+            warn "--- Archive saved to #{output_path}."
 
             beta_config
         end
 
         def deploy_build_to_testflight(beta_build)
+            warn "--- Uploading to TestFlight"
+
             FileUtils.rm_rf('pkg') && FileUtils.mkdir_p('pkg')
             FileUtils.mkdir_p("pkg/Payload")
             FileUtils.mv(beta_build.built_app_path, "pkg/Payload/#{beta_build.app_file_name}")
@@ -96,6 +128,8 @@ module Troops
         end
 
         def clear_builds
+            warn "--- Clean the output folders & files"
+
             %w{pkg build.output build}.each { |f| FileUtils.rm_rf f }
         end
     end
