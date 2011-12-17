@@ -5,26 +5,32 @@ require "betabuilder"
 
 module Troops
     class << self
-        def archive(environment)
-            @environment = environment
+        def archive(args)
+            @environment = args[:environment]
+            @log         = args[:log]
 
            configure do 
                 beta_build = build_task 
 
                 archive_build beta_build
+
+                clear_builds unless @log
             end
         end
 
-        def deploy(environment, needs_to_archive = false, needs_to_distribute = false)
-            @environment         = environment
-            @needs_to_archive    = needs_to_archive
-            @needs_to_distribute = needs_to_distribute
+        def deploy(args)
+            @environment         = args[:environment]
+            @needs_to_archive    = args[:needs_to_archive]
+            @needs_to_distribute = args[:needs_to_distribute]
+            @log                 = args[:log]
 
             configure do
-                beta_build = build_task 
+                beta_build  = build_task 
                 beta_config = archive_build beta_build if @needs_to_archive
 
                 deploy_build_to_testflight beta_build
+
+                clear_builds unless @log
             end
         end
 
@@ -83,6 +89,10 @@ module Troops
 
             beta_build.deployment_strategy.prepare
             beta_build.deployment_strategy.deploy
+        end
+
+        def clear_builds
+            %w{pkg build.output build}.each { |f| FileUtils.rm_rf f }
         end
     end
 end

@@ -56,7 +56,7 @@ Deploy your application by running the following command:
     
     troops deploy
 
-This always uses the staging 'environment' to build the correct target. You can specify an environment by adding it as an argument:
+This always uses the **staging** 'environment' to build the correct target. You can specify an environment by adding it as an argument:
 
     troops deploy production
 
@@ -67,6 +67,12 @@ This command doesn't archive the build, if you want to archive while deploying, 
 To distribute the build to a disitribution group add the `--distribute` argument. This will send an email to the persons belonging to the distribution list defined in the project `.troops` file.
 
     troops deploy production --distribute
+
+### Debug
+
+There is also a `--log` argument that helps you debug if there are problems with your build. The betabuilder gem generates some folers & outpur files that are always removed by troops unless you specify the `--logs`argument. With the arg these remain inside your project folder.
+
+    troops deploy production --log
     
 ## License
 

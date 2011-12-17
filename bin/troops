@@ -10,15 +10,25 @@ module Wasko
     include Thor::Actions
 
     desc "archive ENVIRONMENT", "archive the iOS application"
+    method_options :log => :boolean, :alias => :string
     def archive(environment="staging")
-        Troops.archive(environment)
+        Troops.archive({
+            :environment => environment,
+            :log         => options.log? || false
+        })
     end
 
     desc "deploy ENVIRONMENT", "deploy the iOS application to testflight"
-    method_options :archive => :boolean, :alias => :string
+    method_options :archive    => :boolean, :alias => :string
     method_options :distribute => :boolean, :alias => :string
+    method_options :log        => :boolean, :alias => :string
     def deploy(environment="staging")
-        Troops.deploy(environment, options.archive?, options.distribute?)
+        Troops.deploy({
+            :environment          => environment,
+            :needs_to_archive     => options.archive? || false,
+            :needs_to_disitribute => options.distribute? || false,
+            :log                  => options.log? || false
+        })
     end
   end
 end
