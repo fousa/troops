@@ -5,6 +5,10 @@ require "betabuilder"
 
 module Troops
     class << self
+        def clean
+            clear_builds 
+        end
+
         def archive(args)
             @environment = args[:environment]
             @log         = args[:log]

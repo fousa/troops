@@ -70,9 +70,19 @@ To distribute the build to a disitribution group add the `--distribute` argument
 
 ### Debug
 
-There is also a `--log` argument that helps you debug if there are problems with your build. The betabuilder gem generates some folers & outpur files that are always removed by troops unless you specify the `--logs`argument. With the arg these remain inside your project folder.
+There is also a `--log` argument that helps you debug if there are problems with your build. The betabuilder gem generates some folers & outpur files that are always removed by troops unless you specify the `--logs`argument. 
+
+    * build
+    * build.output
+    * pkg
+
+With the arg these remain inside your project folder.
 
     troops deploy production --log
+
+When you finished debugging you can just throw away the generated folder & files or run the following command to do it for you:
+
+    troops clean
     
 ## License
 

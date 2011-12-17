@@ -9,6 +9,11 @@ module Wasko
   class CLI < Thor
     include Thor::Actions
 
+    desc "clean", "Remove the folders & output files generated"
+    def clean
+        Troops.clean
+    end
+
     desc "archive ENVIRONMENT", "archive the iOS application"
     method_options :log => :boolean, :alias => :string
     def archive(environment="staging")
