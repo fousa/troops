@@ -130,7 +130,7 @@ module Troops
         def clear_builds
             warn "--- Clean the output folders & files"
 
-            %w{pkg build.output build}.each { |f| FileUtils.rm_rf f }
+            %w{output.txt pkg build.output build}.each { |f| FileUtils.rm_rf f }
         end
     end
 end
