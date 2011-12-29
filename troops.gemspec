@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "troops"
-  s.version = "0.2.0"
+  s.version = "0.2.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Jelle Vandebeeck"]
-  s.date = "2011-12-17"
+  s.date = "2011-12-29"
   s.description = "Deploy iOS apps with betabuilder"
   s.email = "jelle@fousa.be"
   s.executables = ["troops"]
@@ -28,7 +28,7 @@ Gem::Specification.new do |s|
   s.licenses = ["MIT"]
   s.rdoc_options = ["--main", "README.md"]
   s.require_paths = ["lib"]
-  s.rubygems_version = "1.8.10"
+  s.rubygems_version = "1.8.11"
   s.summary = "Deploy your iOS apps to TestFlight with betabuilder"
 
   if s.respond_to? :specification_version then
